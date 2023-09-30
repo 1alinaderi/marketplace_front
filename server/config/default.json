@@ -1,0 +1,12 @@
+{
+  "name": "Urameta Api",
+  "db": {
+    // "address": "mongodb://alinaderi:1203ali777@91.107.143.77:27017/"
+    "address": "mongodb://127.0.0.1:27017/Urameta"
+  },
+  "jwt_key": "64e4fac94705635aa6012f16",
+  "dealerInfo": {
+    "email": "alinaderideveloper1@gmail.com",
+    "password": "syvhbiqitpddloks"
+  }
+}
