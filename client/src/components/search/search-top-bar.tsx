@@ -24,9 +24,7 @@ const SearchTopBar = () => {
         <span className="ltr:pl-2.5 rtl:pr-2.5">{t('text-filters')}</span>
       </button>
       <div className="flex items-center justify-end w-full lg:justify-between">
-        <div className="shrink-0 text-brand-dark font-medium text-15px leading-4 md:ltr:mr-6 md:rtl:ml-6 hidden lg:block mt-0.5">
-          2,683 {t('text-items-found')}
-        </div>
+       
         <ListBox
           options={[
             { name: 'text-lowest-price', value: 'lowest' },

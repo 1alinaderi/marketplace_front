@@ -16,6 +16,7 @@ export default function CookiesProductFeed() {
       error={error?.message}
       limit={LIMITS.COOKIES_PRODUCTS_LIMITS}
       uniqueKey="cookies-cakes"
+      type={false}
     />
   );
 }

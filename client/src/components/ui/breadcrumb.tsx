@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { IoChevronForward } from 'react-icons/io5';
 import { IoHomeOutline } from 'react-icons/io5';
 import { ROUTES } from '@utils/routes';
+import Link from 'next/link';
 
 interface Props {
   children: any;
@@ -70,26 +71,19 @@ const Breadcrumb: React.FC<{ separator?: string }> = ({
   ROUTES;
   return (
     <BreadcrumbItems separator={separator}>
-      <ActiveLink
-        href={ROUTES.HOME}
-        activeClassName="font-semibold text-heading"
-      >
-        <a className="inline-flex items-center">
+      <Link href={ROUTES.HOME}>
+        <a className="inline-flex items-center font-semibold text-heading">
           <IoHomeOutline className="ltr:mr-1.5 rtl:ml-1.5 text-brand-dark text-15px" />
           {t('breadcrumb-home')}
         </a>
-      </ActiveLink>
+      </Link>
 
       {breadcrumbs?.map((breadcrumb: any) => (
-        <ActiveLink
-          href={breadcrumb.href}
-          activeClassName="font-semibold text-heading"
-          key={breadcrumb.href}
-        >
-          <a className="capitalize">
+        <Link href={breadcrumb.href} key={breadcrumb.href}>
+          <a className="capitalize font-semibold text-heading">
             {convertBreadcrumbTitle(breadcrumb.breadcrumb)}
           </a>
-        </ActiveLink>
+        </Link>
       ))}
     </BreadcrumbItems>
   );

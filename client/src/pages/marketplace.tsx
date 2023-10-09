@@ -11,7 +11,11 @@ import CookiesProductFeed from '@components/product/feeds/cookies-product-feed';
 import PopcornJerkyProductFeed from '@components/product/feeds/popcorn-jerky-product-feed';
 import ChipsProductFeed from '@components/product/feeds/chips-product-feed';
 import BannerGridTwo from '@components/common/banner-grid-two';
-import { bannerGridTwo as banners , dataBanner2 , dataBanner3 } from '@framework/static/banner';
+import {
+  bannerGridTwo as banners,
+  dataBanner2,
+  dataBanner3,
+} from '@framework/static/banner';
 import { GetStaticProps } from 'next';
 import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -40,16 +44,17 @@ export default function Home() {
 
       <BestSellerProductFeed />
       <Container>
-        <FeatureGrid data={dataBanner2}/>
+        <FeatureGrid data={dataBanner2} />
       </Container>
       <FreshVegetablesProductFeed />
+      <CollectionGrid className="mb-12 lg:mb-14 xl:mb-16" />
+
       <ChipsProductFeed />
 
-      <Container>
-      <FeatureGrid data={dataBanner3} end={true}/>
-      </Container>
+      {/* <Container>
+        <FeatureGrid data={dataBanner3} end={true} />
+      </Container> */}
 
-      {/* <CollectionGrid className="mb-12 lg:mb-14 xl:mb-16" /> */}
       <CookiesProductFeed />
       {/* <PopcornJerkyProductFeed /> */}
       <DownloadApps />

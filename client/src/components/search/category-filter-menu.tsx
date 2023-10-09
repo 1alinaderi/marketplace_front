@@ -50,9 +50,9 @@ function CategoryFilterMenuItem({
       toggleCollapse();
     } else {
       const { category, ...restQuery } = query;
-      let currentFormState = selectedCategories.includes(slug)
-        ? selectedCategories.filter((i) => i !== slug)
-        : [...selectedCategories, slug];
+      let currentFormState = selectedCategories.includes(name)
+        ? selectedCategories.filter((i) => i !== name)
+        : [...selectedCategories, name];
       router.push(
         {
           pathname,
@@ -108,7 +108,15 @@ function CategoryFilterMenuItem({
             </div>
           )}
           <span className="text-brand-dark capitalize py-0.5">{name}</span>
-          {depth > 0 && (
+          <span
+            className={`w-[22px] h-[22px] text-13px flex items-center justify-center border-2 border-border-four rounded-full ltr:ml-auto rtl:mr-auto transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
+              selectedCategories.includes(name) &&
+              'border-yellow-100 bg-yellow-100'
+            }`}
+          >
+            {selectedCategories.includes(name) && <FaCheck />}
+          </span>
+          {/* {depth > 0 && (
             <span
               className={`w-[22px] h-[22px] text-13px flex items-center justify-center border-2 border-border-four rounded-full ltr:ml-auto rtl:mr-auto transition duration-500 ease-in-out group-hover:border-yellow-100 text-brand-light ${
                 selectedCategories.includes(slug) &&
@@ -117,7 +125,7 @@ function CategoryFilterMenuItem({
             >
               {selectedCategories.includes(slug) && <FaCheck />}
             </span>
-          )}
+          )} */}
           {expandIcon && (
             <span className="ltr:ml-auto rtl:mr-auto">{expandIcon}</span>
           )}

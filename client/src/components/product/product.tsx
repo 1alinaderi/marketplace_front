@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@components/ui/button';
 import Counter from '@components/ui/counter';
 import { useRouter } from 'next/router';
@@ -6,7 +6,7 @@ import { ROUTES } from '@utils/routes';
 import useWindowSize from '@utils/use-window-size';
 import { useProductQuery } from '@framework/product/get-product';
 import { getVariations } from '@framework/utils/get-variations';
-import usePrice from '@framework/product/use-price';
+import usePrice, { formatPrice } from '@framework/product/use-price';
 import { useCart } from '@contexts/cart/cart.context';
 import { generateCartItem } from '@utils/generate-cart-item';
 import ProductAttributes from '@components/product/product-attributes';
@@ -24,6 +24,7 @@ import SocialShareBox from '@components/ui/social-share-box';
 import ProductDetailsTab from '@components/product/product-details/product-tab';
 import VariationPrice from './variation-price';
 import isEqual from 'lodash/isEqual';
+import { API_ENDPOINTS, CDN_BASE_URL } from '@framework/utils/api-endpoints';
 
 const ProductSingleDetails: React.FC = () => {
   const { t } = useTranslation('common');
@@ -31,8 +32,20 @@ const ProductSingleDetails: React.FC = () => {
   const {
     query: { slug },
   } = router;
+
   const { width } = useWindowSize();
+
+  useEffect(() => {
+    fetch(
+      process.env.NEXT_PUBLIC_REST_API_ENDPOINT +
+        API_ENDPOINTS.ADDVISIT +
+        '/' +
+        slug
+    );
+  }, []);
+
   const { data, isLoading } = useProductQuery(slug as string);
+
   const { addItemToCart, isInCart, getItemFromCart, isInStock } = useCart();
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
@@ -50,6 +63,7 @@ const ProductSingleDetails: React.FC = () => {
       currencyCode: 'USD',
     }
   );
+
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -75,24 +89,7 @@ const ProductSingleDetails: React.FC = () => {
   const item = generateCartItem(data!, selectedVariation);
   const outOfStock = isInCart(item.id) && !isInStock(item.id);
   function addToCart() {
-    if (!isSelected) return;
-    // to show btn feedback while product carting
-    setAddToCartLoader(true);
-    setTimeout(() => {
-      setAddToCartLoader(false);
-    }, 1500);
-
-    const item = generateCartItem(data!, selectedVariation);
-    addItemToCart(item, quantity);
-    toast('Added to the bag', {
-      progressClassName: 'fancy-progress-bar',
-      position: width! > 768 ? 'bottom-right' : 'top-right',
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    router.push(`/checkout/${slug}?amount=${selectedQuantity}`);
   }
   function addToWishlist() {
     // to show btn feedback while product wishlist
@@ -114,6 +111,11 @@ const ProductSingleDetails: React.FC = () => {
     });
   }
 
+  const imageSrc = `${CDN_BASE_URL}/${data?.image}`;
+  const myLoader = () => {
+    return `${CDN_BASE_URL}/${data?.image}`;
+  };
+
   return (
     <div className="pt-6 pb-2 md:pt-7">
       <div className="grid-cols-10 lg:grid gap-7 2xl:gap-8">
@@ -127,10 +129,12 @@ const ProductSingleDetails: React.FC = () => {
           ) : (
             <div className="flex items-center justify-center w-auto">
               <Image
-                src={data?.image?.original ?? '/product-placeholder.svg'}
+                loader={myLoader}
+                src={imageSrc ?? '/product-placeholder.svg'}
                 alt={data?.name!}
                 width={900}
-                height={680}
+                height={450}
+                className="object-contain"
               />
             </div>
           )}
@@ -141,40 +145,36 @@ const ProductSingleDetails: React.FC = () => {
             <div className="md:mb-2.5 block -mt-1.5">
               <h2 className="text-lg font-medium transition-colors duration-300 text-brand-dark md:text-xl xl:text-2xl">
                 {data?.name}
+                {console.log(data)}
               </h2>
             </div>
-            {data?.unit && isEmpty(variations) ? (
-              <div className="text-sm font-medium md:text-15px">
-                {data?.unit}
-              </div>
-            ) : (
-              <VariationPrice
-                selectedVariation={selectedVariation}
-                minPrice={data?.min_price}
-                maxPrice={data?.max_price}
-              />
-            )}
+            <div className="pt-2">Owner : {data?.owner}</div>
 
             {isEmpty(variations) && (
-              <div className="flex items-center mt-5">
-                <div className="text-brand-dark font-bold text-base md:text-xl xl:text-[22px]">
-                  {price}
-                </div>
-                {discount && (
+              <div className="flex items-center mt-4">
+                {data?.specialPrice ? (
                   <>
+                    <div className="text-brand-dark font-bold text-base md:text-xl xl:text-[22px]">
+                      {formatPrice({
+                        amount: data?.specialPrice,
+                        currencyCode: 'USD',
+                        locale: 'en',
+                      })}
+                    </div>
                     <del className="text-sm text-opacity-50 md:text-15px ltr:pl-3 rtl:pr-3 text-brand-dark ">
-                      {basePrice}
+                      {price}
                     </del>
-                    <span className="inline-block rounded font-bold text-xs md:text-sm bg-brand-tree bg-opacity-20 text-brand-tree uppercase px-2 py-1 ltr:ml-2.5 rtl:mr-2.5">
-                      {discount} {t('text-off')}
-                    </span>
                   </>
+                ) : (
+                  <div className="text-brand-dark font-bold text-base md:text-xl xl:text-[22px]">
+                    {price}
+                  </div>
                 )}
               </div>
             )}
           </div>
 
-          {Object.keys(variations).map((variation) => {
+          {/* {Object.keys(variations).map((variation) => {
             return (
               <ProductAttributes
                 key={`popup-attribute-key${variation}`}
@@ -183,42 +183,22 @@ const ProductSingleDetails: React.FC = () => {
                 setAttributes={setAttributes}
               />
             );
-          })}
+          })} */}
 
           <div className="pb-2">
             {/* check that item isInCart and place the available quantity or the item quantity */}
-            {isEmpty(variations) && (
-              <>
-                {Number(quantity) > 0 || !outOfStock ? (
-                  <span className="text-sm font-medium text-yellow">
-                    {t('text-only') +
-                      ' ' +
-                      quantity +
-                      ' ' +
-                      t('text-left-item')}
-                  </span>
-                ) : (
-                  <div className="text-base text-red-500 whitespace-nowrap">
-                    {t('text-out-stock')}
-                  </div>
-                )}
-              </>
-            )}
 
-            {!isEmpty(selectedVariation) && (
-              <span className="text-sm font-medium text-yellow">
-                {selectedVariation?.is_disable ||
-                selectedVariation.quantity === 0
-                  ? t('text-out-stock')
-                  : `${
-                      t('text-only') +
-                      ' ' +
-                      selectedVariation.quantity +
-                      ' ' +
-                      t('text-left-item')
-                    }`}
-              </span>
-            )}
+            <>
+              {data?.balance > 0 ? (
+                <span className="text-lg font-medium text-yellow">
+                  {data?.balance + ' ' + t('text-left-item')}
+                </span>
+              ) : (
+                <div className="text-base text-red-500 whitespace-nowrap">
+                  {t('text-out-stock')}
+                </div>
+              )}
+            </>
           </div>
 
           <div className="pt-1.5 lg:pt-3 xl:pt-4 space-y-2.5 md:space-y-3.5">
@@ -229,12 +209,7 @@ const ProductSingleDetails: React.FC = () => {
               onDecrement={() =>
                 setSelectedQuantity((prev) => (prev !== 1 ? prev - 1 : 1))
               }
-              disabled={
-                isInCart(item.id)
-                  ? getItemFromCart(item.id).quantity + selectedQuantity >=
-                    Number(item.stock)
-                  : selectedQuantity >= Number(item.stock)
-              }
+              disabled={selectedQuantity >= data?.balance}
             />
             <Button
               onClick={addToCart}
@@ -245,44 +220,6 @@ const ProductSingleDetails: React.FC = () => {
               <CartIcon color="#ffffff" className="ltr:mr-3 rtl:ml-3" />
               {t('text-add-to-cart')}
             </Button>
-            <div className="grid grid-cols-2 gap-2.5">
-              <Button
-                variant="border"
-                onClick={addToWishlist}
-                loading={addToWishlistLoader}
-                className={`group hover:text-brand ${
-                  favorite === true && 'text-brand'
-                }`}
-              >
-                {favorite === true ? (
-                  <IoIosHeart className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all" />
-                ) : (
-                  <IoIosHeartEmpty className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
-                )}
-
-                {t('text-wishlist')}
-              </Button>
-              <div className="relative group">
-                <Button
-                  variant="border"
-                  className={`w-full hover:text-brand ${
-                    shareButtonStatus === true && 'text-brand'
-                  }`}
-                  onClick={handleChange}
-                >
-                  <IoArrowRedoOutline className="text-2xl md:text-[26px] ltr:mr-2 rtl:ml-2 transition-all group-hover:text-brand" />
-                  {t('text-share')}
-                </Button>
-                <SocialShareBox
-                  className={`absolute z-10 ltr:right-0 rtl:left-0 w-[300px] md:min-w-[400px] transition-all duration-300 ${
-                    shareButtonStatus === true
-                      ? 'visible opacity-100 top-full'
-                      : 'opacity-0 invisible top-[130%]'
-                  }`}
-                  shareUrl={productUrl}
-                />
-              </div>
-            </div>
           </div>
           {data?.tag && (
             <ul className="pt-5 xl:pt-6">
@@ -298,7 +235,7 @@ const ProductSingleDetails: React.FC = () => {
           )}
         </div>
       </div>
-      <ProductDetailsTab />
+      <ProductDetailsTab data={data} />
     </div>
   );
 };

@@ -46,8 +46,9 @@ const BottomNavigation: React.FC = () => {
       <div className="lg:hidden fixed z-30 -bottom-0.5 flex items-center justify-between shadow-bottomNavigation body-font bg-brand-light w-full h-14 px-4 md:px-6 lg:px-8 text-brand-muted pb-0.5">
         <button
           aria-label="Menu"
-          className="flex flex-col items-center justify-center outline-none shrink-0 focus:outline-none"
           onClick={handleMobileMenu}
+          className="flex flex-col items-center justify-center outline-none shrink-0 focus:outline-none"
+     
         >
           <MenuIcon />
         </button>
@@ -62,18 +63,19 @@ const BottomNavigation: React.FC = () => {
           <span className="sr-only">{t('breadcrumb-home')}</span>
           <HomeIcon />
         </Link>
-        <CartButton hideLabel={true} iconClassName="text-opacity-100" />
+        {/* <CartButton hideLabel={true} iconClassName="text-opacity-100" /> */}
+        <Link href={ROUTES.LOGIN}>
         <AuthMenu
           isAuthorized={isAuthorized}
           href={ROUTES.ACCOUNT}
           btnProps={{
             className: 'shrink-0 focus:outline-none',
             children: <UserIcon />,
-            onClick: handleLogin,
           }}
         >
           <UserIcon />
         </AuthMenu>
+        </Link>
       </div>
       <Drawer
         placement={dir === 'rtl' ? 'right' : 'left'}

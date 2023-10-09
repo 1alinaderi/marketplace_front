@@ -6,7 +6,7 @@ import { DEFlag } from '@components/icons/language/DEFlag';
 import { ESFlag } from '@components/icons/language/ESFlag';
 
 export const siteSettings = {
-  name: 'BoroBazar',
+  name: 'Project I',
   description:
     'Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS.',
   author: {
@@ -15,11 +15,11 @@ export const siteSettings = {
     address: '',
   },
   logo: {
-    url: '/assets/images/logo.svg',
-    alt: 'BoroBazar',
+    url: '/assets/images/logo.png',
+    alt: 'Project I',
     href: '/marketplace',
-    width: 128,
-    height: 30,
+    width: 70,
+    height: 70,
   },
   defaultLanguage: 'en',
   currencyCode: 'USD',
@@ -27,39 +27,105 @@ export const siteSettings = {
     menu: [
       {
         id: 1,
-        path: '/search',
+        path: '/products',
         label: 'menu-categories',
+        row: true,
         subMenu: [
           {
             id: 1,
-            path: '/search',
-            label: 'menu-fresh-vegetables',
+            path: '/products?category=Floor Material',
+            label: 'Floor Material',
           },
           {
             id: 2,
-            path: '/search',
-            label: 'menu-diet-nutrition',
+            path: '/products?category=Wall Material',
+            label: 'Wall Material',
           },
           {
             id: 3,
-            path: '/search',
-            label: 'menu-healthy-foods',
+            path: '/products?category=Roof Material',
+            label: 'Roof Material',
           },
           {
             id: 4,
-            path: '/search',
-            label: 'menu-grocery-items',
+            path: '/products?category=Facade Material',
+            label: 'Facade Material',
           },
           {
             id: 5,
-            path: '/search',
-            label: 'menu-beaf-steak',
+            path: '/products?category=Area Material',
+            label: 'Area Material',
+          },
+          {
+            id: 6,
+            path: '/products?category=Green space material',
+            label: 'Green Space Material',
+          },
+          {
+            id: 7,
+            path: '/products?category=Door and Window Material',
+            label: 'Door and Window Material',
+          },
+          {
+            id: 8,
+            path: '/products?category=Smart Material',
+            label: 'Smart Material',
+          },
+          {
+            id: 9,
+            path: '/products?category=Facility Material',
+            label: 'Facility Material',
+          },
+          {
+            id: 10,
+            path: '/products?category=Construction Material',
+            label: 'Construction Material',
+          },
+          {
+            id: 11,
+            path: '/products?category=Security Material',
+            label: 'Security Material',
+          },
+          {
+            id: 12,
+            path: '/products?category=Lighting  Material',
+            label: 'Lighting  Material',
+          },
+          {
+            id: 13,
+            path: '/products?category=Pool Material',
+            label: 'Pool Material',
+          },
+          {
+            id: 14,
+            path: '/products?category=Sports Material',
+            label: 'Sports Material',
+          },
+          {
+            id: 15,
+            path: '/products?category=Industrial Material',
+            label: 'Industrial Material',
+          },
+          {
+            id: 16,
+            path: '/products?category=Accessory',
+            label: 'Accessory',
+          },
+          {
+            id: 17,
+            path: '/products?category=Handicrafts',
+            label: 'Handicrafts',
+          },
+          {
+            id: 18,
+            path: '/products?category=Fashion Design',
+            label: 'Fashion Design',
           },
         ],
       },
       {
         id: 2,
-        path: '/shops/',
+        path: '/suppliers/',
         label: 'Suppliers',
       },
 

@@ -12,22 +12,20 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { LIMITS } from '@framework/utils/limits';
 import { Product } from '@framework/types';
+import { useProductQuery } from '@framework/product/get-supplier-product';
 interface ProductFeedProps {
   element?: any;
   className?: string;
+  name?: any;
 }
-const AllProductFeed: FC<ProductFeedProps> = ({ element, className = '' }) => {
+const AllProductFeed: FC<ProductFeedProps> = ({
+  element,
+  className = '',
+  name,
+}) => {
   const { t } = useTranslation('common');
 
-  const { query } = useRouter();
-  const {
-    isFetching: isLoading,
-    isFetchingNextPage: loadingMore,
-    fetchNextPage,
-    hasNextPage,
-    data,
-    error,
-  } = useProductsQuery({ limit: LIMITS.PRODUCTS_LIMITS, ...query });
+  const { data, error, isLoading } = useProductQuery(name);
 
   const { openModal } = useModalAction();
 
@@ -51,7 +49,7 @@ const AllProductFeed: FC<ProductFeedProps> = ({ element, className = '' }) => {
         <Alert message={error?.message} />
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 md:gap-4 2xl:gap-5">
-          {isLoading && !data?.pages?.length ? (
+          {isLoading && !data?.length ? (
             Array.from({ length: LIMITS.PRODUCTS_LIMITS }).map((_, idx) => (
               <ProductCardLoader
                 key={`product--key-${idx}`}
@@ -60,25 +58,14 @@ const AllProductFeed: FC<ProductFeedProps> = ({ element, className = '' }) => {
             ))
           ) : (
             <>
-              {data?.pages?.map((page: any, index) => {
+              {data?.map((product: any, index) => {
                 return (
                   <Fragment key={index}>
-                    {page?.data?.slice(0, 18)?.map((product: Product) => (
-                      <ProductCard
-                        key={`product--key${product.id}`}
-                        product={product}
-                      />
-                    ))}
+                    <ProductCard
+                      key={`product--key${product.id}`}
+                      product={product}
+                    />
                     {element && <div className="col-span-full">{element}</div>}
-                    {page?.data?.length! > 18 &&
-                      slice(page?.data, 18, page?.data?.length).map(
-                        (product: any) => (
-                          <ProductCard
-                            key={`product--key${product.id}`}
-                            product={product}
-                          />
-                        )
-                      )}
                   </Fragment>
                 );
               })}
@@ -86,6 +73,12 @@ const AllProductFeed: FC<ProductFeedProps> = ({ element, className = '' }) => {
           )}
         </div>
       )}
+      {console.log(data)}
+      {/* {data?.map((product) => {
+        return (
+          <ProductCard key={`product--key${product.id}`} product={product} />
+        );
+      })} */}
     </div>
   );
 };

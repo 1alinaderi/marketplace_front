@@ -5,5 +5,8 @@ module.exports = {
     defaultLocale: 'en',
     localeDetection: false,
   },
-  localePath: path.resolve('./public/locales'),
+  images: {
+    domains: ['localhost'],
+  },
+  
 };

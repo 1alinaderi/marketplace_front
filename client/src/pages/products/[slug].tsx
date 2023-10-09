@@ -8,6 +8,7 @@ import Breadcrumb from '@components/ui/breadcrumb';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next';
 import Divider from '@components/ui/divider';
+import FreshVegetablesProductFeed from '@components/product/feeds/fresh-vegetables-product-feed';
 
 export default function ProductPage() {
   return (
@@ -20,8 +21,8 @@ export default function ProductPage() {
         </Container>
       </div>
 
-      <RelatedProductFeed uniqueKey="related-products" />
-      <PopcornJerkyProductFeed />
+      {/* <RelatedProductFeed uniqueKey="related-products" /> */}
+      <FreshVegetablesProductFeed />
       <DownloadApps />
     </>
   );

@@ -25,7 +25,10 @@ const DeliveryAddresses = dynamic(
 const CategoryPopup = dynamic(
   () => import('@components/category/category-popup')
 );
-const ManagedModal: React.FC = () => {
+interface ManagedModalProps {
+  baseData?: any;
+}
+const ManagedModal: React.FC<ManagedModalProps> = ({baseData}) => {
   const { isOpen, view } = useModalState();
   const { closeModal } = useModalAction();
 
@@ -38,8 +41,8 @@ const ManagedModal: React.FC = () => {
   }
   return (
     <Modal open={isOpen} onClose={closeModal}>
-      {view === 'LOGIN_VIEW' && <LoginForm />}
-      {view === 'SIGN_UP_VIEW' && <SignUpForm />}
+      {view === 'LOGIN_VIEW' && <LoginForm baseData={baseData}/>}
+      {view === 'SIGN_UP_VIEW' && <SignUpForm baseData={baseData}/>}
       {view === 'FORGET_PASSWORD' && <ForgetPasswordForm />}
       {view === 'PRODUCT_VIEW' && <ProductPopup />}
       {view === 'ADDRESS_VIEW_AND_EDIT' && <AddressPopup />}

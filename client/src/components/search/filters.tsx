@@ -48,8 +48,8 @@ export const ShopFilters: React.FC = () => {
       )}
 
       <CategoryFilter />
-      <DietaryFilter />
-      <BrandFilter />
+      {/* <DietaryFilter />
+      <BrandFilter /> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 export const fetchBestSellerProducts = async ({ queryKey }: any) => {
   const [_key, _params] = queryKey;
   const { data } = await http.get(API_ENDPOINTS.BEST_SELLER_PRODUCTS);
-  return data as Product[];
+  return data.data as Product[];
 };
 export const useBestSellerProductsQuery = (options: QueryOptionsType) => {
   return useQuery<Product[], Error>(

@@ -7,6 +7,7 @@ import Countdown, { zeroPad } from 'react-countdown';
 import { productPlaceholder } from '@assets/placeholders';
 import ProgressCard from '@components/ui/progress-card';
 import { useTranslation } from 'react-i18next';
+import { CDN_BASE_URL } from '@framework/utils/api-endpoints';
 
 interface ProductProps {
   product: Product;
@@ -46,6 +47,11 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
   date,
 }) => {
   const { name, image, quantity, sold, product_type } = product ?? {};
+
+  const imageSrc = `${CDN_BASE_URL}/${image}`;
+  const myLoader = () => {
+    return `${CDN_BASE_URL}/${image}`;
+  };
   const { openModal } = useModalAction();
   const { t } = useTranslation('common');
   const { price, basePrice } = usePrice({
@@ -78,7 +84,8 @@ const ProductFlashSellCard: React.FC<ProductProps> = ({
         <div className="relative shrink-0">
           <div className="relative flex justify-center mx-auto overflow-hidden">
             <Image
-              src={image?.original ?? productPlaceholder}
+              loader={myLoader}
+              src={imageSrc ?? productPlaceholder}
               alt={name || 'Product Image'}
               width={350}
               height={350}

@@ -16,6 +16,7 @@ import SearchIcon from '@components/icons/search-icon';
 import { useModalAction } from '@components/common/modal/modal.context';
 import useOnClickOutside from '@utils/use-click-outside';
 import Delivery from '@components/layout/header/delivery';
+import Link from 'next/link';
 const AuthMenu = dynamic(() => import('./auth-menu'), { ssr: false });
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
@@ -57,7 +58,7 @@ const Header: React.FC = () => {
           className="top-bar-search hidden lg:max-w-[600px] absolute z-30 px-4 md:px-6 top-1"
         />
         {/* End of Mobile search */}
-        <Container className="flex items-center justify-between h-16 py-3 top-bar lg:h-auto">
+        <Container className="flex items-center justify-center md:justify-between h-16 py-3 top-bar lg:h-auto">
           <Logo className="logo -mt-1.5 md:-mt-1" />
           {/* End of logo */}
 
@@ -71,20 +72,22 @@ const Header: React.FC = () => {
             {/* <div className="xl:mx-3.5 mx-2.5">
               <LanguageSwitcher />
             </div> */}
-            <CartButton className="hidden lg:flex mx-2.5 xl:mx-3.5" />
-            <div className="items-center hidden lg:flex shrink-0 mx-2.5 xl:mx-3.5">
-              <UserIcon className="text-brand-light text-opacity-80" />
-              <AuthMenu
-                isAuthorized={isAuthorized}
-                href={ROUTES.ACCOUNT}
-                btnProps={{
-                  children: t('text-sign-in'),
-                  onClick: handleLogin,
-                }}
-              >
-                {t('text-account')}
-              </AuthMenu>
-            </div>
+            {/* <CartButton className="hidden lg:flex mx-2.5 xl:mx-3.5" /> */}
+            <Link href={'/signin'}>
+              <div className="items-center hidden lg:flex shrink-0 mx-2.5 xl:mx-3.5">
+                <UserIcon className="text-brand-light text-opacity-80" />
+
+                <AuthMenu
+                  isAuthorized={isAuthorized}
+                  href={ROUTES.ACCOUNT}
+                  btnProps={{
+                    children: t('text-sign-in'),
+                  }}
+                >
+                  {t('text-account')}
+                </AuthMenu>
+              </div>
+            </Link>
           </div>
           {/* End of auth & lang */}
         </Container>
@@ -97,6 +100,7 @@ const Header: React.FC = () => {
 
             <HeaderMenu
               data={site_header.menu}
+              row={true}
               className="flex transition-all duration-200 ease-in-out"
             />
             {/* End of main menu */}
@@ -111,39 +115,39 @@ const Header: React.FC = () => {
             )}
             {/* End of conditional search  */}
 
-            {/* <div className="flex items-center ltr:ml-auto rtl:mr-auto shrink-0">
-              <Delivery />
+            <div className="flex items-center ltr:ml-auto rtl:mr-auto shrink-0">
+              {/* <Delivery /> */}
               <div className="flex items-center w-0 py-4 overflow-hidden transition-all duration-200 ease-in-out opacity-0 navbar-right">
                 <button
                   type="button"
                   aria-label="Search Toggle"
                   onClick={() => openSearch()}
                   title="Search toggle"
-                  className="flex items-center justify-center w-12 h-full transition duration-200 ease-in-out outline-none ltr:mr-6 rtl:ml-6 md:w-14 hover:text-heading focus:outline-none"
+                  className="flex items-center justify-center w-12 h-full transition duration-200 ease-in-out outline-none ltr:mr-0 rtl:ml-6 md:w-14 hover:text-heading focus:outline-none"
                 >
-                  <SearchIcon className="w-[22px] h-[22px] text-brand-dark text-opacity-40" />
+                  <SearchIcon className="w-[22px] h-[22px] text-white " />
                 </button>
-       
 
-                <CartButton />
+                {/* 
+                <CartButton /> */}
 
-
-                <div className="flex items-center shrink-0 ltr:ml-7 rtl:mr-7">
-                  <UserIcon className="text-brand-dark text-opacity-40" />
-                  <AuthMenu
-                    isAuthorized={isAuthorized}
-                    href={ROUTES.ACCOUNT}
-                    btnProps={{
-                      children: t('text-sign-in'),
-                      onClick: handleLogin,
-                    }}
-                  >
-                    {t('text-account')}
-                  </AuthMenu>
-                </div>
-      
+                <Link href={'/signin'}>
+                  <div className="flex items-center shrink-0 ltr:ml-4 rtl:mr-7">
+                    <UserIcon className="text-white" />
+                    <AuthMenu
+                      isAuthorized={isAuthorized}
+                      href={ROUTES.ACCOUNT}
+                      btnProps={{
+                        children: t('text-sign-in'),
+                        // onClick: handleLogin,
+                      }}
+                    >
+                      {t('text-account')}
+                    </AuthMenu>
+                  </div>
+                </Link>
               </div>
-            </div> */}
+            </div>
           </Container>
         </div>
         {/* End of menu part */}

@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
 import Seo from '@components/seo/seo';
 
-export default function LegalNotice() {
+export default function LegalNotice({baseData}) {
   return (
     <>
       <Seo
@@ -13,7 +13,7 @@ export default function LegalNotice() {
         description="Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
         path="legal-notice"
       />
-      <AccountLayout>
+      <AccountLayout baseData={baseData}>
         <Legal />
       </AccountLayout>
     </>

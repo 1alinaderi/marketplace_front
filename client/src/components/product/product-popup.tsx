@@ -73,8 +73,8 @@ export default function ProductPopup() {
     currencyCode: 'USD',
   });
   const variations = getVariations(data.variations);
-  const { slug, image, name, unit, description, gallery, tag, quantity } = data;
-  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${ROUTES.PRODUCT}/${slug}`;
+  const { _id, image, name, unit, desc, gallery, tag, quantity } = data;
+  const productUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${ROUTES.PRODUCT}/${_id}`;
   const handleChange = () => {
     setShareButtonStatus(!shareButtonStatus);
   };
@@ -134,7 +134,7 @@ export default function ProductPopup() {
 
   function navigateToProductPage() {
     closeModal();
-    router.push(`${ROUTES.PRODUCT}/${slug}`);
+    router.push(`${ROUTES.PRODUCT}/${_id}`);
   }
 
   useEffect(() => setSelectedQuantity(1), [data.id]);
@@ -329,7 +329,7 @@ export default function ProductPopup() {
                   {t('text-product-details')}:
                 </Heading>
                 <Text variant="small">
-                  {description.split(' ').slice(0, 40).join(' ')}
+                  {desc?.split(' ').slice(0, 40).join(' ')}
                   {'...'}
                   <span
                     onClick={navigateToProductPage}

@@ -6,14 +6,22 @@ import Button from '@components/ui/button';
 import { CheckoutItem } from '@components/checkout/checkout-card-item';
 import { CheckoutCardFooterItem } from './checkout-card-footer-item';
 import { useTranslation } from 'next-i18next';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { ROUTES } from '@utils/routes';
+import { useEffect } from 'react';
+import { useProductQuery } from '@framework/product/get-product';
 
-const CheckoutCard: React.FC = () => {
+const CheckoutCard: React.FC<{ slug: any }> = ({ slug }) => {
   const { t } = useTranslation('common');
   const { items, total, isEmpty } = useCart();
+
+  const router = useRouter();
+
+  const amountProduct = router.query.amount;
+
+  const data = useProductQuery(slug as string);
   const { price: subtotal } = usePrice({
-    amount: total,
+    amount: data.data?.price * amountProduct,
     currencyCode: 'USD',
   });
   function orderHeader() {
@@ -21,9 +29,9 @@ const CheckoutCard: React.FC = () => {
   }
   const checkoutFooter = [
     {
-      id: 1,
-      name: t('text-sub-total'),
-      price: subtotal,
+      id: 2,
+      name: 'Amount',
+      price: amountProduct,
     },
     {
       id: 2,
@@ -47,25 +55,26 @@ const CheckoutCard: React.FC = () => {
             {t('text-sub-total')}
           </span>
         </div>
-        {!isEmpty ? (
+        <CheckoutItem item={data.data} />
+        {/* {!isEmpty ? (
           items.map((item) => <CheckoutItem item={item} key={item.id} />)
         ) : (
           <p className="py-4 text-brand-danger text-opacity-70">
             {t('text-empty-cart')}
           </p>
-        )}
+        )} */}
         {checkoutFooter.map((item: any) => (
           <CheckoutCardFooterItem item={item} key={item.id} />
         ))}
-        <Button
+        {/* <Button
           variant="formButton"
           className={`w-full mt-8 mb-5 bg-brand text-brand-light rounded font-semibold px-4 py-3 transition-all ${
             isEmpty && 'opacity-40 cursor-not-allowed'
           }`}
           onClick={orderHeader}
         >
-          {t('button-order-now')}
-        </Button>
+          {t('button-order-now')} 
+        </Button> */}
       </div>
       <Text className="mt-8">
         {t('text-by-placing-your-order')}{' '}

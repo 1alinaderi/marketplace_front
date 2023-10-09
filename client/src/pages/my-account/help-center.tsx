@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
 import Seo from '@components/seo/seo';
 
-export default function HelpCenter() {
+export default function HelpCenter({baseData}) {
   return (
     <>
       <Seo
@@ -13,7 +13,7 @@ export default function HelpCenter() {
         description="Fastest E-commerce template built with React, NextJS, TypeScript, React-Query and Tailwind CSS."
         path="my-account/help-center"
       />
-      <AccountLayout>
+      <AccountLayout baseData={baseData}>
         <Help />
       </AccountLayout>
     </>

@@ -26,8 +26,13 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = '' }) => {
     error,
   } = useProductsQuery({ limit: LIMITS.PRODUCTS_LIMITS, ...query });
 
+  const prouductData = data?.pages[0]?.data;
+
   return (
     <>
+      <div className="shrink-0 text-brand-dark font-medium text-15px leading-4 md:ltr:mr-6 md:rtl:ml-6 hidden lg:block mt-0.5 pb-7">
+       {prouductData?.length} {t('text-items-found')}
+      </div>
       <div
         className={cn(
           'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-3 md:gap-4 2xl:gap-5',
@@ -45,18 +50,21 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = '' }) => {
               uniqueKey={`product--key-${idx}`}
             />
           ))
-        ) : (
-          data?.pages?.map((page: any) => {
-            return page?.data?.map((product: Product) => (
-              <ProductCard
-                key={`product--key-${product.id}`}
-                product={product}
-              />
-            ));
-          })
-        )}
+        ) : prouductData?.length ? (
+          prouductData?.map((product: Product) => (
+            <ProductCard
+              key={`product--key-${product._id}`}
+              product={product}
+            />
+          ))
+        ) : null}
         {/* end of error state */}
       </div>
+      {!prouductData?.length && (
+        <div className="text-center w-full text-3xl text-black font-bold">
+          No Item Founded
+        </div>
+      )}
       {hasNextPage && (
         <div className="text-center pt-8 xl:pt-10">
           <Button

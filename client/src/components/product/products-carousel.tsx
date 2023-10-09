@@ -21,20 +21,21 @@ interface ProductsCarouselProps {
   limit?: number;
   uniqueKey?: string;
   carouselBreakpoint?: {} | any;
+  type: boolean;
 }
 
 const breakpoints = {
   '1921': {
-    slidesPerView: 7,
+    slidesPerView: 6,
   },
-  '1780': {
-    slidesPerView: 8,
+  '1680': {
+    slidesPerView: 6,
   },
   '1536': {
-    slidesPerView: 7,
+    slidesPerView: 6,
   },
   '1280': {
-    slidesPerView: 6,
+    slidesPerView: 5,
   },
   '1024': {
     slidesPerView: 4,
@@ -60,16 +61,24 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = ({
   limit,
   uniqueKey,
   carouselBreakpoint,
+  type,
 }) => {
   const { width } = useWindowSize();
   const { locale } = useRouter();
   const dir = getDirection(locale);
   return (
     <div
-      className={cn(
-        'max-w-[1920px] overflow-hidden 4xl:overflow-visible px-4 md:px-6 lg:px-8 2xl:ltr:pl-10 2xl:rtl:pr-10 2xl:ltr:pr-0 2xl:rtl:pl-0 4xl:ltr:pr-10 4xl:rtl:pl-10 mx-auto relative',
-        className
-      )}
+      className={
+        type
+          ? cn(
+              'max-w-[1920px] pt-12  overflow-hidden 4xl:overflow-visible px-0 2xl:ltr:pl-0 2xl:rtl:pr-0 2xl:ltr:pr-0 2xl:rtl:pl-0 4xl:ltr:pr-10 4xl:rtl:pl-10 mx-auto relative',
+              className
+            )
+          : cn(
+              'max-w-[1920px] overflow-hidden 4xl:overflow-visible px-4 md:px-6 lg:px-8 2xl:ltr:pl-10 2xl:rtl:pr-10 2xl:ltr:pr-0 2xl:rtl:pl-0 4xl:ltr:pr-10 4xl:rtl:pl-10 mx-auto relative',
+              className
+            )
+      }
     >
       <div className="flex flex-wrap items-center justify-between mb-5 md:mb-6">
         <SectionHeader sectionHeading={sectionHeading} className="mb-0" />
@@ -103,7 +112,7 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = ({
               ))
             ) : (
               <>
-                {products?.map((product: any, idx) => (
+                {products?.map((product: any, idx: any) => (
                   <SwiperSlide
                     key={`${uniqueKey}-${idx}`}
                     className="px-1.5 md:px-2 xl:px-2.5 py-4"
@@ -112,7 +121,7 @@ const ProductsCarousel: React.FC<ProductsCarouselProps> = ({
                   </SwiperSlide>
                 ))}
                 <SwiperSlide className="p-2.5 flex items-center justify-center">
-                  <SeeAll href={categorySlug} />
+                  {!type && <SeeAll href={categorySlug} />}
                 </SwiperSlide>
                 {width! > 1024 && width! < 1921 && <SwiperSlide />}
               </>

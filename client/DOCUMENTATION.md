@@ -1,4 +1,4 @@
-# BoroBazar Documentation
+# Project I Documentation
 
 ## Introduction
 

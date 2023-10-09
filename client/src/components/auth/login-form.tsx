@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@components/ui/form/input';
 import PasswordInput from '@components/ui/form/password-input';
 import Button from '@components/ui/button';
@@ -10,19 +10,62 @@ import Image from '@components/ui/image';
 import { useModalAction } from '@components/common/modal/modal.context';
 import Switch from '@components/ui/switch';
 import CloseButton from '@components/ui/close-button';
-import { FaFacebook, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaLinkedinIn, FaGoogle } from 'react-icons/fa';
 import cn from 'classnames';
+import axios from 'axios';
+import { httpReauest } from 'src/api/api';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface LoginFormProps {
   isPopup?: boolean;
   className?: string;
+  baseData?: any;
+  googleLogin: any;
+  profile: any;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
+const LoginForm: React.FC<LoginFormProps> = ({
+  isPopup = true,
+  className,
+  baseData,
+  googleLogin,
+  profile,
+}) => {
   const { t } = useTranslation();
   const { closeModal, openModal } = useModalAction();
   const { mutate: login, isLoading } = useLoginMutation();
   const [remember, setRemember] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (profile?.email) {
+      googleLoginAndSign();
+    }
+  }, [profile]);
+
+  async function googleLoginAndSign() {
+    await httpReauest(
+      'POST',
+      '/user/sign/google',
+      { email: profile.email, name: profile.given_name },
+      {}
+    )
+      .then((e) => {
+        toast.success(e.data.message);
+        baseData.handleLogin({
+          email: profile.email,
+          id: e.data.data._id,
+          token: e.data.data.token,
+        });
+        router.push(`${window.location.origin}/my-account`);
+      })
+      .catch((e) => {
+        toast.error('Eroor');
+      });
+  }
 
   const {
     register,
@@ -30,23 +73,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
     formState: { errors },
   } = useForm<LoginInputType>();
 
-  function onSubmit({ email, password, remember_me }: LoginInputType) {
-    login({
-      email,
-      password,
-      remember_me,
-    });
+  async function onSubmit({
+    email,
+    password,
+    remember_me = true,
+  }: LoginInputType) {
+    // login({
+    //   email,
+    //   password,
+    //   remember_me,
+    // });
+
+    await httpReauest('POST', '/user/login', { email, password }, {})
+      .then((e) => {
+        toast.success(e.data.message);
+        baseData.handleLogin({
+          email: email,
+          id: e.data.data._id,
+          token: e.data.data.token,
+        });
+        router.push(`${window.location.origin}/my-account`);
+      })
+      .catch((e) => {
+        toast.error('email or password is wrong');
+      });
     closeModal();
-    console.log(email, password, remember_me, 'data');
   }
-  function handelSocialLogin() {
-    login({
-      email: 'demo@demo.com',
-      password: 'demo',
-      remember_me: true,
-    });
-    closeModal();
-  }
+
+  useEffect(() => {
+    if (baseData?.cookies?.user?.email) {
+      router.push(`${window.location.origin}/my-account`);
+    }
+  }, [router.pathname]);
+
   function handleSignUp() {
     return openModal('SIGN_UP_VIEW');
   }
@@ -65,7 +124,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
       <div className="flex mx-auto overflow-hidden rounded-lg bg-brand-light">
         <div className="md:w-1/2 lg:w-[55%] xl:w-[60%] registration hidden md:block relative">
           <Image
-            src="/assets/images/login.png"
+            src="/assets/images/login.jpeg"
             alt="signin Image"
             layout="fill"
           />
@@ -80,13 +139,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
             </h4>
             <div className="mt-3 mb-1 text-sm text-center sm:text-15px text-body">
               {t('common:text-don’t-have-account')}
-              <button
-                type="button"
-                className="text-sm font-semibold text-brand sm:text-15px ltr:ml-1 rtl:mr-1 hover:no-underline focus:outline-none"
-                onClick={handleSignUp}
-              >
-                {t('common:text-create-account')}
-              </button>
+              <Link href="/signup">
+                <button
+                  type="button"
+                  className="text-sm font-semibold text-brand sm:text-15px ltr:ml-1 rtl:mr-1 hover:no-underline focus:outline-none"
+                  // onClick={handleSignUp}
+                >
+                  {t('common:text-create-account')}
+                </button>
+              </Link>
             </div>
           </div>
           <form
@@ -117,17 +178,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
                 })}
               />
               <div className="flex items-center justify-center">
-                <div className="flex items-center shrink-0">
-                  <label className="relative inline-block cursor-pointer switch">
-                    <Switch checked={remember} onChange={setRemember} />
-                  </label>
-                  <label
-                    htmlFor="remember"
-                    className="mt-1 text-sm cursor-pointer shrink-0 text-heading ltr:pl-2.5 rtl:pr-2.5"
-                  >
-                    {t('forms:label-remember-me')}
-                  </label>
-                </div>
                 <div className="flex ltr:ml-auto rtl:mr-auto mt-[3px]">
                   <button
                     type="button"
@@ -137,6 +187,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ isPopup = true, className }) => {
                     {t('common:text-forgot-password')}
                   </button>
                 </div>
+              </div>
+              <div className="relative">
+                <Button
+                  onClick={googleLogin}
+                  loading={isLoading}
+                  disabled={isLoading}
+                  className="w-full mt-2 tracking-normal h-11 md:h-12 font-15px md:font-15px"
+                  variant="border"
+                >
+                  <FaGoogle className="mr-3" size={23} /> Sign With Google
+                </Button>
               </div>
               <div className="relative">
                 <Button

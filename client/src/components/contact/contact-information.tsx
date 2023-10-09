@@ -40,7 +40,7 @@ const ContactInformation: FC = () => {
   return (
     <>
       {data.length > 0 && (
-        <div className="px-5 lg:px-0 xl:px-12 sm:grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-7 max-w-[1420px] mx-auto space-y-7 sm:space-y-0 pt-1">
+        <div className="px-5 lg:px-0 mb-12 xl:px-12 sm:grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-7 max-w-[1420px] mx-auto space-y-7 sm:space-y-0 pt-1">
           {data?.map((item: any) => (
             <div
               key={`contact--key${item.id}`}

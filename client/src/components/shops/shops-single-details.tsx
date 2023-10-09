@@ -11,13 +11,15 @@ import ShopSidebarDrawer from '@components/shops/shop-sidebar-drawer';
 import AllProductFeed from '@components/product/feeds/all-products-feed';
 import { useTranslation } from 'next-i18next';
 import useWindowSize from '@utils/use-window-size';
+import { useSupplierQuery } from '@framework/product/get-supplier';
+import { CDN_BASE_URL } from '@framework/utils/api-endpoints';
 
 const ShopsSingleDetails: React.FC = () => {
   const {
     query: { slug },
   } = useRouter();
   const { t } = useTranslation('common');
-  const { data, isLoading } = useShopQuery(slug as string);
+  const { data, isLoading } = useSupplierQuery(slug as string);
   const { openShop, displayShop, closeShop } = useUI();
   const { width } = useWindowSize();
   const { locale } = useRouter();
@@ -26,6 +28,11 @@ const ShopsSingleDetails: React.FC = () => {
 
   if (isLoading) return <p>Loading...</p>;
 
+  const imageSrc = `${CDN_BASE_URL}/${data?.image}`;
+  const myLoader = () => {
+    return `${CDN_BASE_URL}/${data?.image}`;
+  };
+
   return (
     <>
       <div
@@ -33,19 +40,24 @@ const ShopsSingleDetails: React.FC = () => {
         style={{
           backgroundImage: `url(${
             width! <= 480
-              ? data?.cover_image?.original!
-              : data?.cover_image?.thumbnail!
+              ? data?.coverImage
+                ? data?.coverImage
+                : '/assets/images/shop-page-hero-bg.jpg'
+              : data?.coverImage
+              ? data?.coverImage
+              : '/assets/images/shop-page-hero-bg.jpg'
           })`,
         }}
       />
       <div className="flex items-center px-4 py-4 border-b lg:hidden md:px-6 border-border-base mb-7">
         <div className="flex shrink-0">
           <Image
-            src={data?.logo?.original!}
+            loader={myLoader}
+            src={imageSrc}
             alt={data?.name}
-            width={66}
-            height={66}
-            className="rounded-md"
+            width={80}
+            height={80}
+            className="rounded-md object-contain"
           />
         </div>
         <div className="ltr:pl-4 rtl:pr-4">
@@ -72,7 +84,7 @@ const ShopsSingleDetails: React.FC = () => {
           </div>
 
           <div className="w-full lg:ltr:pl-7 lg:rtl:pr-7">
-            <AllProductFeed />
+            <AllProductFeed name={data?.name} />
           </div>
         </Element>
       </Container>

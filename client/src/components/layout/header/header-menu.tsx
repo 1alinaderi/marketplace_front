@@ -7,9 +7,10 @@ import cn from 'classnames';
 interface MenuProps {
   data: any;
   className?: string;
+  row: boolean;
 }
 
-const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
+const HeaderMenu: React.FC<MenuProps> = ({ data, className, row }) => {
   const { t } = useTranslation('menu');
   return (
     <nav
@@ -36,8 +37,16 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
           </Link>
 
           {item?.subMenu && Array.isArray(item?.subMenu) && (
-            <div className="absolute z-30 opacity-0 subMenu shadow-dropDown transition-all duration-300 invisible bg-brand-light ltr:left-0 rtl:right-0 w-[220px] xl:w-[240px] group-hover:opacity-100">
-              <ul className="py-5 text-sm text-brand-muted">
+            <div
+              className={`absolute z-30 opacity-0 subMenu shadow-dropDown transition-all duration-300 invisible bg-brand-light ltr:left-0 rtl:right-0   ${
+                item.row ? 'w-[630px] xl:w-[700px]' : 'w-[220px] xl:w-[240px]'
+              }  group-hover:opacity-100`}
+            >
+              <ul
+                className={`py-5 text-sm text-brand-muted ${
+                  item.row ? 'flex flex-wrap col-span-12' : ''
+                } `}
+              >
                 {item.subMenu.map((menu: any, index: number) => {
                   const dept: number = 1;
                   const menuName: string = `sidebar-menu-${dept}-${index}`;
@@ -49,6 +58,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
                       menuName={menuName}
                       key={menuName}
                       menuIndex={index}
+                      row={item.row ? true : false}
                     />
                   );
                 })}

@@ -5,37 +5,8 @@ import useWindowSize from '@utils/use-window-size';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
 import { ROUTES } from '@utils/routes';
-
-const data = [
-  {
-    id: 1,
-    slug: 'feel-the-thirsty-in-summer-anytime',
-    image: '/assets/images/collection/1.png',
-    title: 'collection-title-one',
-    description: 'collection-description-one',
-  },
-  {
-    id: 2,
-    slug: 'most-popular-item-for-Fast-food',
-    image: '/assets/images/collection/2.png',
-    title: 'collection-title-two',
-    description: 'collection-description-two',
-  },
-  {
-    id: 3,
-    slug: 'authentic-japanese-food-in-real-taste',
-    image: '/assets/images/collection/3.png',
-    title: 'collection-title-three',
-    description: 'collection-description-three',
-  },
-  {
-    id: 4,
-    slug: 'explore-our-family-of-freshest®-foods',
-    image: '/assets/images/collection/4.png',
-    title: 'collection-title-four',
-    description: 'collection-description-four',
-  },
-];
+import { useOrderQuery } from '@framework/order/get-order';
+import { useCategoriesQuery } from '@framework/category/get-all-categories';
 
 interface Props {
   className?: string;
@@ -44,7 +15,7 @@ interface Props {
 
 const breakpoints = {
   '1024': {
-    slidesPerView: 3,
+    slidesPerView: 6,
   },
   '768': {
     slidesPerView: 3,
@@ -62,11 +33,15 @@ const CollectionGrid: React.FC<Props> = ({
   headingPosition = 'left',
 }) => {
   const { width } = useWindowSize();
+
+  const { data , isLoading} = useCategoriesQuery({ limit: 18 });
+
+
   return (
     <div className={className}>
       <Container>
         <SectionHeader
-          sectionHeading="text-curated-collections"
+          sectionHeading="Categories"
           sectionSubHeading="text-categories-grocery-items"
           headingPosition={headingPosition}
         />
@@ -80,7 +55,7 @@ const CollectionGrid: React.FC<Props> = ({
             prevActivateId="collection-carousel-button-prev"
             nextActivateId="collection-carousel-button-next"
           >
-            {data?.map((item) => (
+            {data?.map((item:any) => (
               <SwiperSlide
                 key={`collection-key-${item.id}`}
                 className="px-1.5 md:px-2 xl:px-2.5 py-4"
@@ -88,18 +63,18 @@ const CollectionGrid: React.FC<Props> = ({
                 <CollectionCard
                   key={item.id}
                   collection={item}
-                  href={`${ROUTES.BUNDLE}/${item.slug}`}
+                  href={`${ROUTES.CATEGORY}/${item?.name}`}
                 />
               </SwiperSlide>
             ))}
           </Carousel>
         ) : (
-          <div className="gap-5 2xl:grid 2xl:grid-cols-4 3xl:gap-7">
-            {data?.map((item) => (
+          <div className="gap-5 2xl:grid 2xl:grid-cols-6 3xl:gap-7">
+            {data?.map((item:any) => (
               <CollectionCard
                 key={item.id}
                 collection={item}
-                href={`${ROUTES.BUNDLE}/${item.slug}`}
+                href={`/products?category=${item?.name}`}
               />
             ))}
           </div>

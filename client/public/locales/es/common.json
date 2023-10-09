@@ -42,7 +42,7 @@
   "banner-meat-needs-title": "¡Cuide sus necesidades! No se olvide de InstaMeat",
   "banner-thousand-grocery-title": "Miles de los mejores artículos de comestibles",
   "banner-healthy-vegetable-description": "Obtenemos y vendemos la mejor carne de res, cordero y cerdo, obtenidos con el mayor cuidado del granjero.",
-  "banner-thousand-grocery-title-description": "Compra de comestibles en línea a bajo precio en todo el mundo en BoroBazar",
+  "banner-thousand-grocery-title-description": "Compra de comestibles en línea a bajo precio en todo el mundo en Project I",
   "button-send-message": "Enviar mensaje",
   "button-go-home": "Vete a casa",
   "button-order-now": "Ordene ahora",
@@ -52,7 +52,7 @@
   "button-complete-process": "Proceso completo",
   "button-next-steps": "Próximos pasos",
   "button-app-store": "App Store",
-  "button-play-store": "Play Store", 
+  "button-play-store": "Play Store",
   "notification-one-title": "Mensajes de texto",
   "notification-one-description": "Comparta la información de su perfil para recopilar el resultado de la búsqueda del producto",
   "notification-two-title": "Llame antes de finalizar la compra",
@@ -164,7 +164,7 @@
   "text-and": "y",
   "text-login": "Iniciar sesión",
   "text-account-wishlist": "Lista de favoritos",
-  "text-by-placing-your-order": "Al realizar su pedido, usted acepta estar sujeto a BoroBazar",
+  "text-by-placing-your-order": "Al realizar su pedido, usted acepta estar sujeto a Project I",
   "text-terms-of-service": "Términos de Servicio",
   "text-credit-debit": "Los datos de su tarjeta de crédito/débito no se guardarán.",
   "text-bag-fee": "Se puede agregar una tarifa de bolsa a su total final si lo requiere la ley o el minorista. La tarifa será visible en su recibo después de la entrega.",
@@ -229,4 +229,4 @@
   "text-all-shops": "Todas las tiendas",
   "text-more-info": "Más información",
   "text-details": "Detalles"
-  }
+}

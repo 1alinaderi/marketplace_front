@@ -1,4 +1,4 @@
-  {
+{
   "breadcrumb-home": "الصفحة الرئيسية",
   "app-heading": "اجعل التسوق عبر الإنترنت أسهل من خلال تطبيق الهاتف المحمول الخاص بنا",
   "app-description": "نحن نقدم أفلامًا عالية الجودة وأفضل اختيار وثائقي ، والقدرة على التصفح أبجديًا وحسب النوع",
@@ -34,7 +34,7 @@
   "contact-form-info-title": "الدعم هو أولويتنا الرئيسية",
   "contact-form-info-content": "أنشأنا مكونات رد فعل قابلة لإعادة الاستخدام ، وبنية repo أحادية حديثة ، حتى تتمكن من بناء تطبيقات متعددة مع مكونات مشتركة. يمكنك استخدام هذه الهبوط لتطبيق رد الفعل الخاص بك. انها فائقة سهلة النشر، قدمنا التكامل قاعدة النار كاملة عليه.",
   "order-page-title": "قائمة الطلبات الخاصة بي",
-  "order-page-input-placeholder": "قائمة ترتيب البحث", 
+  "order-page-input-placeholder": "قائمة ترتيب البحث",
   "order-table-action-one": "تفاصيل الطلب",
   "order-table-action-two": "إلغاء الأمر",
   "order-modal-heading": "تفاصيل الطلب",
@@ -42,7 +42,7 @@
   "banner-meat-needs-title": "لحوم احتياجاتك! لا تنسَ وجبة إنستاميت",
   "banner-thousand-grocery-title": "ألف من أفضل منتجات البقالة",
   "banner-healthy-vegetable-description": "نحن نصدر أفضل أنواع لحوم البقر ولحم الضأن ولحم الخنزير ونبيعها ، ويتم الحصول عليها بأكبر قدر من العناية من المزارع.",
-  "banner-thousand-grocery-title-description": "تسوق البقالة عبر الإنترنت بسعر منخفض في جميع أنحاء العالم على BoroBazar",
+  "banner-thousand-grocery-title-description": "تسوق البقالة عبر الإنترنت بسعر منخفض في جميع أنحاء العالم على Project I",
   "button-send-message": "إرسال رسالة",
   "button-go-home": "عد للمنزل",
   "button-order-now": "اطلب الآن",
@@ -164,7 +164,7 @@
   "text-and": "و",
   "text-login": "تسجيل الدخول",
   "text-account-wishlist": "قائمة المفضلة",
-  "text-by-placing-your-order": "من خلال وضع طلبك، فإنك توافق على الالتزام ب BoroBazar",
+  "text-by-placing-your-order": "من خلال وضع طلبك، فإنك توافق على الالتزام ب Project I",
   "text-terms-of-service": "شروط الخدمة",
   "text-credit-debit": "لن يتم حفظ بيانات بطاقة الائتمان/الخصم.",
   "text-bag-fee": "يمكن إضافة رسوم حقيبة إلى المجموع النهائي إذا لزم الأمر بموجب القانون أو بائع التجزئة. ستكون الرسوم مرئية على الإيصال بعد التسليم.",
@@ -229,4 +229,4 @@
   "text-all-shops": "جميع المتاجر",
   "text-more-info": "مزيد من المعلومات",
   "text-details": "التفاصيل"
-  }
+}

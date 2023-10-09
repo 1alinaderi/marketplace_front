@@ -19,7 +19,7 @@ export default function ContactUsPage() {
       />
       <PageContactHeroSection />
       <Container>
-        <div className="max-w-[1420px] mx-auto mb-12 lg:mb-14 xl:mb-16">
+        <div className="max-w-[1420px] mx-auto mb-1 lg:mb-14 xl:mb-16">
           <div className="flex flex-wrap bg-brand-light w-full p-5 md:p-7 lg:p-10 xl:p-16 3xl:px-[70px] xl:py-12 shadow-contact rounded-md -mt-8 relative z-10">
             <div className="w-full md:w-[53%] xl:w-[60%] md:ltr:pr-8 md:rtl:pl-8 lg:ltr:pr-0 lg:rtl:pl-0 2xl:ltr:pr-24 2xl:rtl:pl-24 lg:mb-0 mb-8">
               <ContactSupport />
@@ -28,10 +28,12 @@ export default function ContactUsPage() {
               <ContactForm />
             </div>
           </div>
+          
         </div>
         <ContactInformation />
+
       </Container>
-      <div className="mt-12 md:mt-16 xl:mt-20 2xl:mt-24 bg-fill-two relative h-[420px]">
+      {/* <div className="mt-12 md:mt-16 xl:mt-20 2xl:mt-24 bg-fill-two relative h-[420px]">
         <Map
           lat={1.295831}
           lng={103.76261}
@@ -39,7 +41,7 @@ export default function ContactUsPage() {
           zoom={15}
           showInfoWindow={true}
         />
-      </div>
+      </div> */}
       <DownloadApps />
     </>
   );

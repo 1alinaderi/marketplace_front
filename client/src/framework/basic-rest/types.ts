@@ -65,6 +65,22 @@ export type Brand = {
   image?: Attachment;
   [key: string]: unknown;
 };
+
+export type Supplier = {
+  id: number | string;
+  name: string;
+  desc: string;
+  image?: Attachment;
+  [key: string]: unknown;
+};
+
+export type USER = {
+  id: number | string;
+  name: any;
+  email : any ,
+  createdAt : any ,
+  [key: string]: unknown;
+};
 export type Dietary = {
   id: number | string;
   name: string;

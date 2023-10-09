@@ -16,6 +16,7 @@ export const CategoryFilter = () => {
     limit: 10,
   });
 
+
   if (loading) {
     return (
       <div className="hidden xl:block">
@@ -31,9 +32,9 @@ export const CategoryFilter = () => {
     <div className="block">
       <Heading className="mb-5 -mt-1">{t('text-categories')}</Heading>
       <div className="max-h-full overflow-hidden rounded border border-border-base">
-        <Scrollbar className="w-full category-filter-scrollbar">
-          {data?.categories?.data?.length ? (
-            <CategoryFilterMenu items={data?.categories?.data} />
+        <Scrollbar className="w-full ">
+          {data ? (
+            <CategoryFilterMenu items={data} />
           ) : (
             <div className="min-h-full pt-6 pb-8 px-9 lg:p-8">
               {t('text-no-results-found')}

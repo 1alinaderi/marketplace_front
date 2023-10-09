@@ -6,12 +6,7 @@ const ErrorInformation: React.FC = () => {
   const backgroundThumbnail = '/assets/images/404-bg.png';
   const errorThumbnail = '/assets/images/404.png';
   return (
-    <div
-      className="text-center px-12 py-16 sm:py-20 lg:py-24 xl:py-32 flex items-center justify-center bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage: `url(${backgroundThumbnail})`,
-      }}
-    >
+    <div className="text-center px-12 py-16 sm:py-20 lg:py-24 xl:py-32 flex items-center justify-center bg-cover bg-no-repeat bg-center">
       <div className="max-w-md xl:max-w-lg">
         <Image
           src={errorThumbnail}

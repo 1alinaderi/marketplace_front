@@ -14,13 +14,14 @@ async function logout() {
     message: 'Logout Successful!',
   };
 }
-export const useLogoutMutation = () => {
+export const useLogoutMutation = (handleLogin) => {
+  // handleLogin(null);
   const { unauthorize } = useUI();
   return useMutation(() => logout(), {
     onSuccess: (_data) => {
       Cookies.remove('auth_token');
       unauthorize();
-      Router.push('/');
+      Router.push('/signin');
     },
     onError: (data) => {
       console.log(data, 'logout error response');

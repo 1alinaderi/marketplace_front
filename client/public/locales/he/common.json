@@ -1,4 +1,4 @@
-  {
+{
   "breadcrumb-home": "דף הבית",
   "app-heading": "הפוך את החנות המקוונת לקלה יותר עם האפליקציה לנייד שלנו",
   "app-description": "אנו מציעים סרטים באיכות גבוהה והמבחר התיעודי הטוב ביותר, והיכולת לגלוש באלפבית ולפי ז'אנר",
@@ -42,7 +42,7 @@
   "banner-meat-needs-title": "בשר את צרכיך! אל תשכח את InstaMeat",
   "banner-thousand-grocery-title": "אלף פריטי המכולת הטובים ביותר",
   "banner-healthy-vegetable-description": "אנו מספקים ומוכרים את הבקר, הטלה והחזיר הטובים ביותר, שמקורם בזהירות רבה מהחקלאי.",
-  "banner-thousand-grocery-title-description": "קניות מכולת באינטרנט במחיר נמוך ברחבי העולם ב- BoroBazar",
+  "banner-thousand-grocery-title-description": "קניות מכולת באינטרנט במחיר נמוך ברחבי העולם ב- Project I",
   "button-send-message": "שלח הודעה",
   "button-go-home": "לך הביתה",
   "button-order-now": "הזמן עכשיו",
@@ -164,7 +164,7 @@
   "text-and": "ו",
   "text-login": "כניסה",
   "text-account-wishlist": "רשימת מועדפים",
-  "text-by-placing-your-order": "על ידי ביצוע ההזמנה שלך, אתה מסכים להיות מחויב על ידי BoroBazar",
+  "text-by-placing-your-order": "על ידי ביצוע ההזמנה שלך, אתה מסכים להיות מחויב על ידי Project I",
   "text-terms-of-service": "תנאי שירות",
   "text-credit-debit": "נתוני כרטיס האשראי/חיוב שלך לא יישמרו.",
   "text-bag-fee": "ניתן להוסיף אגרת תיק לסכום הסופי שלך אם הדבר נדרש על פי חוק או על-פי הקמעונאי. העמלה תהיה גלויה בקבלה שלך לאחר המסירה.",
@@ -229,4 +229,4 @@
   "text-all-shops": "כל החנויות",
   "text-more-info": "מידע נוסף",
   "text-details": "פרטים"
-  }
+}

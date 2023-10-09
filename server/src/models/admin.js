@@ -1,53 +1,67 @@
 const mongoose = require("mongoose");
 const timestamp = require("mongoose-timestamp");
 
-InvitedPeopleSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  wallet: { type: String, required: true },
-});
-const AdminSchema = new mongoose.Schema({
-  password: { type: String, required: true },
-  wallet: { type: String, required: true },
-});
-
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  password: { type: String, required: true },
-  wallet: { type: String, required: true },
-  refCode: { type: String, required: true, unique: true },
-  inviteCode: { type: String },
-  packageID: { type: Number },
-  InvitedPeople: [InvitedPeopleSchema],
-  withdrawTime: { type: Number },
-  UraBalance: { type: Number },
-  withdrawBalance: { type: Number },
+  password: { type: String },
+  email: { type: String, required: true, unique: true },
+  acceptCode: { type: Number, required: true },
+  status: { type: Boolean, required: true },
+  address: { type: String },
+  VIP: { type: Boolean, required: true },
 });
 UserSchema.plugin(timestamp);
 
-const PackageSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
+  prouductId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "Prouduct",
+  },
+  status: { type: String, required: true },
+  payed: { type: Boolean, required: true },
+  amount: { type: Number, required: true },
+});
+OrderSchema.plugin(timestamp);
+
+const ProuductSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  desc: { type: String, required: true },
   price: { type: Number, required: true },
-  id: { type: Number, required: true },
-  time: { type: String, required: true },
-  benfit: { type: Number, required: true },
+  owner: { type: String, required: true },
+  specialPrice: { type: Number },
+  category: { type: mongoose.Types.ObjectId, required: true, ref: "Category" },
+  soldCount: { type: Number, required: true, default: 0 },
+  balance: { type: Number, required: true },
+  image: { type: String },
+  visit: { type: Number, required: true, default: 0 },
+});
+ProuductSchema.plugin(timestamp);
+
+const CategorySchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  image: { type: String },
 });
 
-const WebsiteSchema = new mongoose.Schema({
-  visitors: [{type : String , unique : true}],
-  aboutText: { type: String },
-  Commitment: { type: String },
-  whatIsUra: { type: String },
-  whyBuyUra: { type: String },
-  twiteer: { type: String },
-  facebook: { type: String },
-  youtube: { type: String },
-  tiktok: { type: String },
-  telegram: { type: String },
-  instagram: { type: String },
+const AdminSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  password: { type: String, required: true },
 });
 
+const SupplierSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
+  bio: { type: String, required: true },
+  image: { type: String },
+  soldCount: { type: Number, required: true, default: 0 },
+});
+SupplierSchema.plugin(timestamp);
+
+const Order = mongoose.model("Order", OrderSchema);
 const User = mongoose.model("User", UserSchema);
+const Supplier = mongoose.model("Supplier", SupplierSchema);
+const Prouduct = mongoose.model("Prouduct", ProuductSchema);
+const Category = mongoose.model("Category", CategorySchema);
 const Admin = mongoose.model("Admin", AdminSchema);
-const Package = mongoose.model("Package", PackageSchema);
-const WebsiteData = mongoose.model("WebsiteData", WebsiteSchema);
 
-module.exports = { User, Package, Admin, WebsiteData };
+module.exports = { User, Prouduct, Supplier, Category, Order, Admin };

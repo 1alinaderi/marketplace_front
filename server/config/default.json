@@ -1,8 +1,7 @@
 {
-  "name": "Urameta Api",
+  "name": "marketplace Api",
   "db": {
-    // "address": "mongodb://alinaderi:1203ali777@91.107.143.77:27017/"
-    "address": "mongodb://127.0.0.1:27017/Urameta"
+    "address": "mongodb://127.0.0.1:27017/marketplace"
   },
   "jwt_key": "64e4fac94705635aa6012f16",
   "dealerInfo": {

@@ -16,6 +16,7 @@ export default function FreshVegetablesProductFeed() {
       error={error?.message}
       limit={LIMITS.FRESH_VEGETABLES_PRODUCTS_LIMITS}
       uniqueKey="fresh-vegetable"
+      type={false}
     />
   );
 }
